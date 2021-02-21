@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.yourgg.assignment.config.FeignRetryConfiguration;
 import com.yourgg.assignment.service.dto.SummonerDto;
 
-@FeignClient(value="get-summoner-api",url="https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name", decode404 = true, configuration = {
+@FeignClient(value="get-summoner-api",url="https://kr.api.riotgames.com", decode404 = true, configuration = {
         FeignRetryConfiguration.class})
 public interface RiotClient {
 
-    @GetMapping("/{summonerName}?api_key=")
+    @GetMapping("/lol/summoner/v4/summoners/by-name/{summonerName}?api_key=")
     SummonerDto getSummonerInfo(@PathVariable("summonerName") String summonerName);
 
 }
