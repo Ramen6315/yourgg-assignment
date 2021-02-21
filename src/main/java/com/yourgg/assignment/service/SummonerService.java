@@ -2,18 +2,20 @@ package com.yourgg.assignment.service;
 
 import org.springframework.stereotype.Service;
 
-import com.yourgg.assignment.client.RiotClient;
-import com.yourgg.assignment.service.dto.SummonerDto;
+import com.yourgg.assignment.service.dto.UserDto;
 
 @Service
 public class SummonerService {
-    private RiotClient riotClient;
 
-    public SummonerService(final RiotClient riotClient) {
-        this.riotClient = riotClient;
+    private final RiotApiService riotApiService;
+
+    public SummonerService(final RiotApiService riotApiService) {
+
+        this.riotApiService = riotApiService;
     }
 
-    public SummonerDto getSummonerInfo(final String summonerName) {
-        return riotClient.getSummonerInfo(summonerName);
+    public UserDto getSummonerInfo(final String summonerName) {
+
+        return riotApiService.getUserMatchlistInfo(summonerName);
     }
 }

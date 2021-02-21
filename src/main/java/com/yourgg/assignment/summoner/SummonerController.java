@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yourgg.assignment.service.SummonerService;
-import com.yourgg.assignment.service.dto.SummonerDto;
+import com.yourgg.assignment.service.dto.UserDto;
 
 @RestController
 public class SummonerController {
@@ -17,7 +17,8 @@ public class SummonerController {
     }
 
     @GetMapping("/{summonerName}")
-    public SummonerDto getSummonerInfo(@PathVariable("summonerName") String summonerName) {
+    public UserDto getSummonerInfo(@PathVariable("summonerName") String summonerName) {
         return summonerService.getSummonerInfo(summonerName);
     }
 }
+
