@@ -1,8 +1,8 @@
 package com.yourgg.assignment.service.dto;
 
+
 import java.util.List;
 
-import com.yourgg.assignment.riot.dto.ParticipantDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,9 +12,12 @@ public class UserDto {
 
     private final String summonerName;
 
-    private final List<ParticipantDto> summonerMatchInfos;
+    private List<SummonerInGameDto> summonerInGameDtos;
 
-    public static UserDto of(final String summonerName, final List<ParticipantDto> summonerMatchInfos) {
-        return new UserDto(summonerName, summonerMatchInfos);
+    public static UserDto of(String summonerName, List<SummonerInGameDto> summonerInGameDtos) {
+
+        return new UserDto(summonerName, summonerInGameDtos);
     }
+
+
 }
