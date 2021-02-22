@@ -1,4 +1,4 @@
-package com.yourgg.assignment.service.dto;
+package com.yourgg.assignment.riot.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -12,9 +12,6 @@ public class MatchReferenceDto {
     @JsonProperty(value = "role")
     private String role;
 
-    @JsonProperty(value = "season")
-    private int season;
-
     @JsonProperty(value = "platformId")
     private String platformId;
 
@@ -26,7 +23,4 @@ public class MatchReferenceDto {
 
     @JsonProperty(value = "lane")
     private String lane;
-
-    @JsonProperty(value = "timestamp")
-    private long timestamp;
 }

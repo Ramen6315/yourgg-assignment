@@ -1,8 +1,8 @@
 package com.yourgg.assignment.service.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.yourgg.assignment.riot.dto.ParticipantDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,16 +10,11 @@ import lombok.Getter;
 @Getter
 public class UserDto {
 
-    private final List<MatchReferenceDto> matches;
+    private final String summonerName;
 
-    public static UserDto of( final MatchlistDto matchlistDto) {
+    private final List<ParticipantDto> summonerMatchInfos;
 
-        List<MatchReferenceDto> matches = matchlistDto.getMatches();
-        List<MatchReferenceDto> latestTwentyMatches = new ArrayList<>();
-        for (int index = 0; index < 20; index++) {
-            latestTwentyMatches.add(matches.get(index));
-        }
-
-        return new UserDto(latestTwentyMatches);
+    public static UserDto of(final String summonerName, final List<ParticipantDto> summonerMatchInfos) {
+        return new UserDto(summonerName, summonerMatchInfos);
     }
 }

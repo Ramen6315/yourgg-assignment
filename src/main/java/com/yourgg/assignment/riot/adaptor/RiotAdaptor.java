@@ -1,10 +1,11 @@
-package com.yourgg.assignment.adaptor;
+package com.yourgg.assignment.riot.adaptor;
 
 import org.springframework.stereotype.Component;
 
-import com.yourgg.assignment.client.RiotClient;
-import com.yourgg.assignment.service.dto.MatchlistDto;
-import com.yourgg.assignment.service.dto.SummonerDto;
+import com.yourgg.assignment.riot.client.RiotClient;
+import com.yourgg.assignment.riot.dto.MatchDto;
+import com.yourgg.assignment.riot.dto.MatchlistDto;
+import com.yourgg.assignment.riot.dto.SummonerDto;
 
 @Component
 public class RiotAdaptor {
@@ -21,5 +22,9 @@ public class RiotAdaptor {
 
     public MatchlistDto getMatchlistDto(String encryptedAccountId) {
         return riotClient.getMachlistInfo(encryptedAccountId);
+    }
+
+    public MatchDto getMatchDto(long matchId) {
+        return riotClient.getMatchInfo(matchId);
     }
 }

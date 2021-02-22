@@ -2,7 +2,8 @@ package com.yourgg.assignment.service;
 
 import org.springframework.stereotype.Service;
 
-import com.yourgg.assignment.service.dto.UserDto;
+import com.yourgg.assignment.riot.service.RiotApiService;
+
 
 @Service
 public class SummonerService {
@@ -14,7 +15,7 @@ public class SummonerService {
         this.riotApiService = riotApiService;
     }
 
-    public UserDto getSummonerInfo(final String summonerName) {
+    public UserDto getSummonerInfo(final String summonerName) throws InterruptedException {
 
         return riotApiService.getUserMatchlistInfo(summonerName);
     }

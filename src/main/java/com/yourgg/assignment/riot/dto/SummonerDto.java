@@ -1,4 +1,4 @@
-package com.yourgg.assignment.service.dto;
+package com.yourgg.assignment.riot.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

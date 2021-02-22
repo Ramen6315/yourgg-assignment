@@ -2,7 +2,6 @@ spring:
   application:
     name: feign
 
-
 feign:
   client:
     config:

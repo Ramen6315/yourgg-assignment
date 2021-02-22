@@ -17,7 +17,7 @@ public class SummonerController {
     }
 
     @GetMapping("/{summonerName}")
-    public UserDto getSummonerInfo(@PathVariable("summonerName") String summonerName) {
+    public UserDto getSummonerInfo(@PathVariable("summonerName") String summonerName) throws InterruptedException {
         return summonerService.getSummonerInfo(summonerName);
     }
 }

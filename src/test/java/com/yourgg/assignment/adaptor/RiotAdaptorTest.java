@@ -8,9 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.yourgg.assignment.client.RiotClient;
-import com.yourgg.assignment.service.dto.MatchlistDto;
-import com.yourgg.assignment.service.dto.SummonerDto;
+import com.yourgg.assignment.riot.adaptor.RiotAdaptor;
+import com.yourgg.assignment.riot.client.RiotClient;
+import com.yourgg.assignment.riot.dto.MatchlistDto;
+import com.yourgg.assignment.riot.dto.SummonerDto;
 
 @SpringBootTest
 class RiotAdaptorTest {
