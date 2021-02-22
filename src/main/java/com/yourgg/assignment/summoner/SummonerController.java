@@ -1,11 +1,13 @@
 package com.yourgg.assignment.summoner;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yourgg.assignment.service.SummonerService;
-import com.yourgg.assignment.service.dto.UserDto;
+import com.yourgg.assignment.service.dto.SummonerInGameDto;
 
 @RestController
 public class SummonerController {
@@ -17,7 +19,7 @@ public class SummonerController {
     }
 
     @GetMapping("/{summonerName}")
-    public UserDto getSummonerInfo(@PathVariable("summonerName") String summonerName) throws InterruptedException {
+    public List<SummonerInGameDto> getSummonerInfo(@PathVariable("summonerName") String summonerName) throws InterruptedException {
         return summonerService.getSummonerInfo(summonerName);
     }
 }
