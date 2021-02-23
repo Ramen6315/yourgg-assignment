@@ -9,23 +9,21 @@ import lombok.Getter;
 @Getter
 public class SummonerInGameDto {
 
-    private int participantId;
+    private final int participantId;
 
-    private String championIdUrl;
+    private final SummonerInGameStatsDto summonerInGameStatsDto;
 
-    private SummonerInGameStatsDto stats;
+    private final SummonerItemDto summonerInGameItemDto;
 
-    private String spellOneUrl;
-
-    private String spellTwoUrl;
+    private final SummonerImageUrlDto summonerImageUrlDto;
 
     public static SummonerInGameDto of(final ParticipantDto participantDto, final RiotDataParser riotDataParser) {
 
-        int participantId = participantDto.getParticipantId();
-        String championIdUrl = riotDataParser.championIdParser(participantDto.getChampionId());
-        SummonerInGameStatsDto stats = SummonerInGameStatsDto.of(participantDto.getStats(), riotDataParser);
-        String spellOneUrl = riotDataParser.spellIdParser(participantDto.getSpellOneId());
-        String spellTwoUrl = riotDataParser.spellIdParser(participantDto.getSpellTwoId());
-        return new SummonerInGameDto(participantId, championIdUrl, stats, spellOneUrl, spellTwoUrl);
+        SummonerInGameStatsDto summonerInGameStatsDto = SummonerInGameStatsDto.of(participantDto.getStats());
+        SummonerItemDto summonerItemDto = SummonerItemDto.of(participantDto.getStats());
+        SummonerImageUrlDto summonerImageUrlDto = SummonerImageUrlDto.of(participantDto, riotDataParser);
+
+        return new SummonerInGameDto(participantDto.getParticipantId(), summonerInGameStatsDto, summonerItemDto
+                , summonerImageUrlDto);
     }
 }

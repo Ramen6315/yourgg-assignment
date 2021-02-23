@@ -1,6 +1,5 @@
 package com.yourgg.assignment.service.dto;
 
-import com.yourgg.assignment.riot.adaptor.RiotDataParser;
 import com.yourgg.assignment.riot.dto.ParticipantStatsDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,49 +8,24 @@ import lombok.Getter;
 @Getter
 public class SummonerInGameStatsDto {
 
-    private int itemZero;
+    private final int kill;
 
-    private int itemOne;
+    private final int deaths;
 
-    private int itemTwo;
+    private final int assists;
 
-    private int itemThree;
+    private final long totalDamageDealtToChampions;
 
-    private int itemFour;
+    private final int goldEarned;
 
-    private int itemFive;
+    private final int champLevel;
 
-    private int itemSix;
+    private final int creepScore;
 
-    private int kill;
+    private final boolean win;
 
-    private int deaths;
+    public static SummonerInGameStatsDto of(final ParticipantStatsDto participantDto) {
 
-    private int assists;
-
-    private long totalDamageDealtToChampions;
-
-    private int goldEarned;
-
-    private int champLevel;
-
-    private int creepScore;
-
-    private String perkZeroUrl;
-
-    private String perkSubStyleUrl;
-
-    private boolean win;
-
-    public static SummonerInGameStatsDto of(final ParticipantStatsDto participantDto, final RiotDataParser riotDataParser) {
-
-        int itemZero = participantDto.getItemZero();
-        int itemOne = participantDto.getItemOne();
-        int itemTwo = participantDto.getItemTwo();
-        int itemThree = participantDto.getItemThree();
-        int itemFour = participantDto.getItemFour();
-        int itemFive = participantDto.getItemFive();
-        int itemSix = participantDto.getItemSix();
         int kill = participantDto.getKill();
         int deaths = participantDto.getDeaths();
         int assists = participantDto.getAssists();
@@ -59,12 +33,9 @@ public class SummonerInGameStatsDto {
         int goldEarned = participantDto.getGoldEarned();
         int champLevel = participantDto.getChampLevel();
         int creepScore = participantDto.getTotalMinionsKilled() + participantDto.getNeutralMinionsKilled();
-        String perkZeroUrl = riotDataParser.perkZeroIdParser(participantDto.getPerkZero());
-        String perkSubStyleUrl = riotDataParser.subRuneIdParser(participantDto.getPerkSubStyle());
         boolean win = participantDto.isWin();
 
-        return new SummonerInGameStatsDto(itemZero, itemOne, itemTwo, itemThree, itemFour, itemFive, itemSix, kill
-                , deaths, assists, totalDamageDealtToChampions, goldEarned, champLevel, creepScore, perkZeroUrl,
-                perkSubStyleUrl, win);
+        return new SummonerInGameStatsDto( kill, deaths, assists, totalDamageDealtToChampions, goldEarned, champLevel
+                , creepScore, win);
     }
 }

@@ -44,6 +44,6 @@ class RiotAdaptorTest {
         SummonerDto summonerDto = riotAdaptor.getSummonerDto(summonerName);
         MatchlistDto matchlistDto = riotAdaptor.getMatchlistDto(summonerDto.getAccountId());
 
-        assertThat(matchlistDto.getMatches()).hasSize(100);
+        assertThat(matchlistDto.getMatches()).hasSize(20);
     }
 }
