@@ -1,6 +1,7 @@
 package com.yourgg.assignment.riot.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -31,18 +32,31 @@ public class RiotApiService {
     public List<SummonerInGameDto> getUserMatchlistInfo(String summonerName) throws InterruptedException {
         List<ParticipantDto> summonerMatchInfos = new ArrayList<>();
         List<SummonerInGameDto> summonerInGameDtos = new ArrayList<>();
+        StringBuilder urlSummonerName = new StringBuilder();
+        List<String> strings = Arrays.asList(summonerName.split(""));
+        createUpperFirstAlpabet(urlSummonerName, strings);
 
-        SummonerDto summonerDto = adaptor.getSummonerDto(summonerName);
+        SummonerDto summonerDto = adaptor.getSummonerDto(summonerName.replaceAll(" ","%20"));
         MatchlistDto matchlistDto = adaptor.getMatchlistDto(summonerDto.getAccountId());
         List<MatchReferenceDto> matchReferences = matchlistDto.getMatches();
         List<MatchDto> matchDtos = new ArrayList<>();
 
         getLatestMatchs(matchReferences, matchDtos);
-        getLatestUserMatchs(summonerName, summonerMatchInfos, matchDtos);
+        getLatestUserMatchs(urlSummonerName.toString(), summonerMatchInfos, matchDtos);
         for (ParticipantDto participantDto : summonerMatchInfos) {
             summonerInGameDtos.add(SummonerInGameDto.of(participantDto, riotDataParser));
         }
         return summonerInGameDtos;
+    }
+
+    private void createUpperFirstAlpabet(final StringBuilder urlSummonerName, final List<String> strings) {
+        for (int i = 0; i < strings.size(); i++) {
+            String firstAlphabet = strings.get(i);
+            if(i == 0) {
+                firstAlphabet = firstAlphabet.toUpperCase();
+            }
+            urlSummonerName.append(firstAlphabet);
+        }
     }
 
     private void getLatestMatchs(final List<MatchReferenceDto> matchReferences, final List<MatchDto> matchDtos) throws
