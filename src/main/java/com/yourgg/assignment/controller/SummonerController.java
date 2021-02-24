@@ -1,4 +1,4 @@
-package com.yourgg.assignment.summoner;
+package com.yourgg.assignment.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +16,7 @@ public class SummonerController {
         this.summonerService = summonerService;
     }
 
-    @GetMapping("/{summonerName}")
+    @GetMapping("search/{summonerName}")
     public UserDto getSummonerInfo(@PathVariable("summonerName") String summonerName) throws InterruptedException {
         return summonerService.getSummonerInfo(summonerName);
     }
