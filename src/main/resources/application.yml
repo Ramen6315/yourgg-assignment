@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: feign
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 2000
+        loggerLevel: FULL
+
+logging:
+  level:
+    io.github.mayaul: DEBUG
