@@ -1,12 +1,194 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>hello world!</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=100px, initial-scale=1 ">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
 </head>
+<style>
+    .navbar h1 {
+        display: inline-block;
+        font-size: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 50px;
+        position: center;
+        text-align: center;
+    }
+    .navbar
+</style>
 <body>
-<h1>Index 페이지 입니다.</h1>
+
+<nav class="navbar sticky-top navbar-light bg-light" >
+    <h1 class="font-monospace">LoL 전적 검색사이트 </h1>
+</nav>
+<h4 style="text-align: center">소환사 이름 입력후 검색버튼을 눌러주세요! 검색 후 3~5초 정도의 시간이 소요됩니다.</h4>
+<h4 style="text-align: center">다시 검색 하실땐 새로고침을 한번 하고 해주세요!</h4>
+<nav class="navbar navbar-light bg-light">
+    <form class="container-fluid">
+        <div class="input-group">
+            <input id="summoner_input" type="text" class="form-control" placeholder="소환사이름" aria-label="Username" aria-describedby="basic-addon1" style="width:200px;">
+            <button class="input-group-text" id="basic-addon1" >검색</button>
+        </div>
+    </form>
+</nav>
+
+<ul id="result">
+</ul>
+
+<ul id="list">
+</ul>
+
 </body>
+<script language="JavaScript">
+    const button = document.getElementById('basic-addon1');
+    const input = document.getElementById('summoner_input');
+    const results = document.getElementById('result')
+    const flag = document.createDocumentFragment();
+
+
+
+    let kill
+    let deaths
+    let assists
+    let totalDamageDealtToChampions
+    let goldEarned
+    let champLevel
+    let creepScore
+    let win
+
+    let winCnt = 0.0;
+    let loseCnt = 0.0;
+    let winRate = 0.0
+
+    button.addEventListener('click',function( e ){
+        e.preventDefault();
+        fetch("http://localhost:8080/search/"+input.value)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(myJson) {
+                let s = JSON.stringify(myJson);
+                let {summonerInGameDtos, summonerName} = JSON.parse(s);
+                let elementById = document.getElementById('list');
+                const winRateAndName = document.createElement('li');
+                for(const index in summonerInGameDtos) {
+                    let summonerInGameStatsDto = summonerInGameDtos[index].summonerInGameStatsDto;
+                    if(summonerInGameStatsDto.win === true){
+                        winCnt++;
+                    } else {
+                        loseCnt++;
+                    }
+                }
+                winRate = winCnt/(winCnt + loseCnt);
+                winRateAndName.innerHTML = `
+                    <li>소환사 이름 ${summonerName}</li>
+                    <li>승률 : ${winRate * 100}%</li>
+                    `
+                results.appendChild(winRateAndName);
+                for(const index in summonerInGameDtos) {
+
+                    let summonerInGameStatsDto = summonerInGameDtos[index].summonerInGameStatsDto;
+                    let summonerInGameItemDto = summonerInGameDtos[index].summonerInGameItemDto;
+                    let summonerImageUrlDto = summonerInGameDtos[index].summonerImageUrlDto;
+
+                    kill = summonerInGameStatsDto.kill;
+                    deaths = summonerInGameStatsDto.deaths;
+                    assists = summonerInGameStatsDto.assists;
+                    totalDamageDealtToChampions = summonerInGameStatsDto.totalDamageDealtToChampions;
+                    goldEarned = summonerInGameStatsDto.goldEarned;
+                    champLevel = summonerInGameStatsDto.champLevel;
+                    creepScore = summonerInGameStatsDto.creepScore;
+                    if(summonerInGameStatsDto.win) {
+                        win = "승";
+                    } else {
+                        win = "패";
+                    }
+
+                    let zeroItem = "https://ddragon.leagueoflegends.com/cdn/11.4.1/img/item/"+summonerInGameItemDto.itemZero+".png"
+                    let oneItem = "https://ddragon.leagueoflegends.com/cdn/11.4.1/img/item/"+summonerInGameItemDto.itemOne+".png"
+                    let twoItem = "https://ddragon.leagueoflegends.com/cdn/11.4.1/img/item/"+summonerInGameItemDto.itemTwo+".png"
+                    let threeItem = "https://ddragon.leagueoflegends.com/cdn/11.4.1/img/item/"+summonerInGameItemDto.itemThree+".png"
+                    let fourItem = "https://ddragon.leagueoflegends.com/cdn/11.4.1/img/item/"+summonerInGameItemDto.itemFour+".png"
+                    let fiveItem = "https://ddragon.leagueoflegends.com/cdn/11.4.1/img/item/"+summonerInGameItemDto.itemFive+".png"
+                    let sixItem = "https://ddragon.leagueoflegends.com/cdn/11.4.1/img/item/"+summonerInGameItemDto.itemSix+".png"
+
+                    if(summonerInGameItemDto.itemZero === 0){
+                        zeroItem = "https://menaregional.com/wp-content/plugins/wp-ui/images/pattern.png"
+                    }
+                    if(summonerInGameItemDto.itemOne === 0){
+                        oneItem = "https://menaregional.com/wp-content/plugins/wp-ui/images/pattern.png"
+                    }
+                    if(summonerInGameItemDto.itemTwo === 0){
+                        twoItem = "https://menaregional.com/wp-content/plugins/wp-ui/images/pattern.png"
+                    }
+                    if(summonerInGameItemDto.itemThree === 0){
+                        threeItem = "https://menaregional.com/wp-content/plugins/wp-ui/images/pattern.png"
+                    }
+                    if(summonerInGameItemDto.itemFour === 0){
+                        fourItem = "https://menaregional.com/wp-content/plugins/wp-ui/images/pattern.png"
+                    }
+                    if(summonerInGameItemDto.itemFive === 0){
+                        fiveItem = "https://menaregional.com/wp-content/plugins/wp-ui/images/pattern.png"
+                    }
+                    if(summonerInGameItemDto.itemSix === 0){
+                        sixItem = "https://menaregional.com/wp-content/plugins/wp-ui/images/pattern.png"
+                    }
+
+                    if(summonerInGameStatsDto.win === true){
+                        winCnt++;
+                    } else {
+                        loseCnt++;
+                    }
+                    winRate = winCnt/(winCnt + loseCnt);
+
+                    const span = document.createElement('span');
+                    span.innerHTML = `
+
+                    <div style="border 1px gray">
+                    <img src="https://ddragon.leagueoflegends.com/cdn/11.4.1/img/champion/${summonerImageUrlDto.championImageUrl}">
+                    <img src="https://ddragon.leagueoflegends.com/cdn/img/${summonerImageUrlDto.perkZeroImageUrl}" width="70" height="70">
+                    <img src="https://ddragon.leagueoflegends.com/cdn/img/${summonerImageUrlDto.perkSubStyleImageUrl}" width="40" height="40">
+                    <br>
+                    <img src="https://ddragon.leagueoflegends.com/cdn/11.4.1/img/spell/${summonerImageUrlDto.spellOneImageUrl}" width="50" height="50">
+                    <img src="https://ddragon.leagueoflegends.com/cdn/11.4.1/img/spell/${summonerImageUrlDto.spellTwoImageUrl}" width="50" height="50">
+                    <br>
+                    <img src="${zeroItem}" width="35" height="35">
+                    <img src="${oneItem}" width="35" height="35">
+                    <img src="${twoItem}" width="35" height="35">
+                    <img src="${threeItem}" width="35" height="35">
+                    <img src="${fourItem}" width="35" height="35">
+                    <img src="${fiveItem}" width="35" height="35">
+                    <img src="${sixItem}" width="35" height="35">
+                        <br>
+                        <span> 결과 :  ${win} </span>
+                        <br>
+                        <span> 챔피언 레벨 : ${champLevel}</span>
+                        <br>
+                        <span> K / D / A : ${kill} / ${deaths} / ${assists}</span>
+                        <br>
+                        <span> 총 데미지 : ${totalDamageDealtToChampions}</span>
+                        <br>
+                        <span> 골드 : ${goldEarned} </span>
+                        <br>
+                        <span> cs : ${creepScore}</span>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                `
+                    flag.appendChild(span);
+                    console.log(totalDamageDealtToChampions, champLevel, goldEarned)
+                }
+
+                elementById.appendChild(flag)
+            });
+    });
+
+</script>
 </html>
