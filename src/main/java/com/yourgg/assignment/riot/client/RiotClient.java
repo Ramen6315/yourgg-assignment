@@ -16,13 +16,13 @@ public interface RiotClient {
     String endIndex = "20";
     String beginIndex = "0";
 
-    @GetMapping("/lol/summoner/v4/summoners/by-name/{summonerName}?api_key=")
+    @GetMapping("/lol/summoner/v4/summoners/by-name/{summonerName}?api_key=RGAPI-12780316-453c-40a1-b3f0-266e58d256ee")
     SummonerDto getSummonerInfo(@PathVariable("summonerName") String summonerName);
 
-    @GetMapping("/lol/match/v4/matchlists/by-account/{encryptedAccountId}?endIndex=" + endIndex + "&beginIndex=" + beginIndex + "&api_key=")
+    @GetMapping("/lol/match/v4/matchlists/by-account/{encryptedAccountId}?endIndex=" + endIndex + "&beginIndex=" + beginIndex + "&api_key=RGAPI-12780316-453c-40a1-b3f0-266e58d256ee")
     MatchlistDto getMachlistInfo(@PathVariable("encryptedAccountId") String encryptedAccountId);
 
-    @GetMapping("/lol/match/v4/matches/{matchId}?api_key=")
+    @GetMapping("/lol/match/v4/matches/{matchId}?api_key=RGAPI-12780316-453c-40a1-b3f0-266e58d256ee")
     MatchDto getMatchInfo(@PathVariable("matchId") long matchId);
 }
 
